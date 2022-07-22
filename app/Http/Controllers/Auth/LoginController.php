@@ -6,58 +6,81 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use Illuminate\Support\Facades\Auth;
+
 class LoginController extends Controller
 {
-    public function login(Request $request)
+    /**
+     * Create a new AuthController instance.
+     *
+     * @return void
+     */
+    public function __construct()
     {
-        if (!auth()->attempt($request->only('email','password'))) {
-            throw new AuthenticationException();
-        }
-
-        $user = User::where('email', $request['email'])->firstOrFail();
-
-        $token = $user->createToken('auth_token')->plainTextToken;
-
-        return response()
-            ->json(
-            [
-                'message' => 'Hi '.$user->name.', welcome to home',
-                'token' => $token, 
-                'token_type' => 'Bearer', 
-                'user' => $user,
-            ]);
-
+        $this->middleware('auth:api', ['except' => ['login']]);
     }
 
-    public function logout(Request $request)
+    /**
+     * Get a JWT via given credentials.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function login()
     {
-        auth()->user()->tokens()->delete();
+        $credentials = request(['email', 'password']);
 
-        return [
-            'message' => 'You have successfully logged out and the token was successfully deleted'
-        ];
+        if (! $token = auth()->attempt($credentials)) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        return $this->respondWithToken($token);
     }
 
-    public function check_token(Request $request)
+    /**
+     * Get the authenticated User.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function me()
     {
-        if (!auth()->check()) {
+        return response()->json(auth()->user());
+    }
 
-            return response()->json([
-                'message' => 'Token Abis',
-                'status' => false
-            ]);
+    /**
+     * Log the user out (Invalidate the token).
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function logout()
+    {
+        auth()->logout();
 
-        }
+        return response()->json(['message' => 'Successfully logged out']);
+    }
+
+    /**
+     * Refresh a token.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function refresh()
+    {
+        return $this->respondWithToken(auth()->refresh());
+    }
+
+    /**
+     * Get the token array structure.
+     *
+     * @param  string $token
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function respondWithToken($token)
+    {
         return response()->json([
-
-                'message' => 'Token Ada woy',
-                'status' => true
-
-            ]);
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60
+        ]);
     }
-
-    // public function logout(Request $request)
-    // {
-    //     auth()->logout();
-    // }
 }

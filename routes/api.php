@@ -21,12 +21,14 @@ use App\Http\Controllers\Auth\LoginController;
 //     return $request->user();
 // });
 
-Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::get('/user', function(Request $request) {
-        return auth()->user();
-    });
-    Route::post('/logout', [LoginController::class, 'logout']);
+Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
+    Route::post('login', [LoginController::class, 'login']);
+    Route::post('logout', [LoginController::class, 'logout']);
+    Route::post('refresh', [LoginController::class, 'refresh']);
+    Route::post('me', [LoginController::class, 'me']);
 });
+
+
 
 Route::post('/login', [LoginController::class, 'login']);
 
