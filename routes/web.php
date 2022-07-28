@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/login', 'App\Http\Controllers\AuthController@login')->name('login');
-Route::post('/login', 'App\Http\Controllers\AuthController@authenticate');
+Route::get('/login', 'App\Http\Controllers\AuthController@login')->name('login')->middleware('guest');
+Route::post('/login', 'App\Http\Controllers\AuthController@authenticate')->middleware('guest');
 
 Route::get('/dashboard', 'App\Http\Controllers\DashboardController@index')->middleware('auth');
