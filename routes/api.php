@@ -34,6 +34,7 @@ Route::post('/login', [LoginController::class, 'login']);
 
 // ============= GLOBAL =====================
 Route::get('/get-ustadz', 'App\Http\Controllers\Backend\UstadzController@index');
+Route::get('/get-ustadz-detail', 'App\Http\Controllers\Backend\UstadzController@show');
 Route::get('/get-province', 'App\Http\Controllers\Backend\ProvinceController@index');
 Route::get('/get-city', 'App\Http\Controllers\Backend\CityController@index');
 
