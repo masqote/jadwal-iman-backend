@@ -43,6 +43,7 @@ Route::get('/get-city', 'App\Http\Controllers\Backend\CityController@index');
 
 Route::get('/date-single', [DateController::class, 'index']);
 Route::get('/get-jadwal', [JadwalController::class, 'index']);
+Route::get('/get-jadwal-ustadz', [JadwalController::class, 'jadwalUstadz']);
 Route::get('/get-jadwal/{slug}', [JadwalController::class, 'slug']);
 
 

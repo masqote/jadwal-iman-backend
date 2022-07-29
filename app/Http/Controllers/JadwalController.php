@@ -6,9 +6,11 @@ use App\Models\City;
 use App\Models\Jadwal;
 use App\Models\Ustadz;
 use Illuminate\Http\Request;
+use App\Http\Controllers\API\ApiResponse;
 
 class JadwalController extends Controller
 {
+    use ApiResponse;
     public function index(Request $req)
     {
         $jadwal = Jadwal::with('ustadz')
@@ -38,11 +40,35 @@ class JadwalController extends Controller
         ]);
     }
 
+    public function jadwalUstadz(Request $req)
+    {
+        $jadwal = Jadwal::with('ustadz')
+        ->whereHas('ustadz', function($q){
+            $q->active();
+        });
+       
+        if ($req->id) {
+           $jadwal->where('ustadz_id',$req->id);
+        }
+
+        try {
+            $data = $jadwal->get();
+            if (count($data) > 0) {
+                return $this->success('','',$data);
+            }
+            return $this->fail('','Data tidak ditemukan!');
+        } catch (\Throwable $th) {
+            return $this->fail('',$th->getMessage());
+        }
+    }
+
     public function slug(Request $req, $slug)
     {
-        $data = Jadwal::where('slug',$slug)->firstOrFail();
-        return response()->json([
-            'data'=> $data
-        ]);
+        try {
+            $data = Jadwal::where('slug',$slug)->firstOrFail();
+            return $this->success('','',$data);
+        } catch (\Throwable $th) {
+            return $this->fail('',$th->getMessage());
+        }
     }
 }
