@@ -51,6 +51,10 @@ class JadwalController extends Controller
            $jadwal->where('ustadz_id',$req->id);
         }
 
+        if ($req->day) {
+            $jadwal->where('date_at',$req->day);
+        }
+
         try {
             $data = $jadwal->get();
             if (count($data) > 0) {
