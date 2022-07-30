@@ -14,11 +14,26 @@ class UstadzController extends Controller
     public function index(Request $req)
     {
         try {
-            $ustadz = Ustadz::active()->where('name', 'LIKE', $req->q.'%')->get();
+            $ustadz = Ustadz::active()->where('name', 'LIKE', $req->q.'%')->orderBy('name','ASC')->get();
             if (count($ustadz) > 0) {
                 return $this->success('','',$ustadz);
             }else{
                 return $this->success('','Ustadz '.$req->q.' tidak ditemukan',$ustadz);
+            }
+        } catch (\Throwable $th) {
+           return $this->fail('',$th->getMessage());
+        }
+
+    }
+
+    public function ustadzFavorit(Request $req)
+    {
+        try {
+            $ustadz = Ustadz::active()->orderBy('views','DESC')->get();
+            if (count($ustadz) > 0) {
+                return $this->success('','',$ustadz);
+            }else{
+                return $this->success('','Ustadz tidak ditemukan',$ustadz);
             }
         } catch (\Throwable $th) {
            return $this->fail('',$th->getMessage());

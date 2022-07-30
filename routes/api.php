@@ -40,7 +40,7 @@ Route::get('/get-city', 'App\Http\Controllers\Backend\CityController@index');
 
 
 // ============= Frontend =====================
-
+Route::get('/get-ustadz-favorit', 'App\Http\Controllers\Backend\UstadzController@ustadzFavorit');
 Route::get('/date-single', [DateController::class, 'index']);
 Route::get('/get-jadwal', [JadwalController::class, 'index']);
 Route::get('/get-jadwal-ustadz', [JadwalController::class, 'jadwalUstadz']);
