@@ -60,7 +60,7 @@ class JadwalController extends Controller
             if (count($data) > 0) {
                 return $this->success('','',$data);
             }
-            return $this->fail('','Data tidak ditemukan!');
+            return $this->success('','Data tidak ditemukan!');
         } catch (\Throwable $th) {
             return $this->fail('',$th->getMessage());
         }
