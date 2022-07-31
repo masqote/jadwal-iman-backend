@@ -55,6 +55,8 @@ class JadwalController extends Controller
             $jadwal->where('date_at',$req->day);
         }
 
+        $jadwal->orderBy('date_at','asc')->orderBy('time_at','asc');
+
         try {
             $data = $jadwal->get();
             if (count($data) > 0) {
