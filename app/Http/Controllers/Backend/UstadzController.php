@@ -45,6 +45,9 @@ class UstadzController extends Controller
     {
         try {
             $ustadz = Ustadz::active()->where('slug',$req->slug)->firstOrFail();
+            if ($ustadz) {
+                $ustadz->increment('views', 1);
+            }
             return $this->success('','',$ustadz);
         } catch (\Throwable $th) {
             return $this->fail('',$th->getMessage());
