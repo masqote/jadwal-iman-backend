@@ -11,7 +11,7 @@ class DateController extends Controller
     public function index()
     {
         Carbon::setLocale('id');
-        $period = CarbonPeriod::create(today(), Carbon::now()->addDays(30));
+        $period = CarbonPeriod::create(today(), Carbon::now()->addDays(8));
 
         // Convert the period to an array of dates
         $dates = $period->toArray();
