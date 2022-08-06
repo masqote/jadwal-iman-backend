@@ -20,7 +20,7 @@ class Jadwal extends Model
 
     public function getProvinceNameAttribute()
     {
-        return $this->address->province->name;
+        return $this->address->province->name ?? '';
     }
 
     public function getUstadzNameAttribute()
@@ -30,7 +30,7 @@ class Jadwal extends Model
 
     public function getCityNameAttribute()
     {
-        return $this->address->city->name;
+        return $this->address->city->name ?? '';
     }
 
     public function ustadz()
