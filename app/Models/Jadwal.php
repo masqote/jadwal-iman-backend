@@ -14,12 +14,12 @@ class Jadwal extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $appends = ['province_name','ustadz_name','city_name'];
+    protected $appends = ['ustadz_name','province_name','city_name'];
 
 
     public function getProvinceNameAttribute()
     {
-        return $this->province->name;
+        return $this->address->province->name;
     }
 
     public function getUstadzNameAttribute()
@@ -29,7 +29,7 @@ class Jadwal extends Model
 
     public function getCityNameAttribute()
     {
-        return $this->city->name;
+        return $this->address->city->name;
     }
 
     public function ustadz()
@@ -37,14 +37,10 @@ class Jadwal extends Model
         return $this->hasOne(Ustadz::class,'id','ustadz_id');
     }
 
-    public function province()
+    public function address()
     {
-        return $this->hasOne(Province::class,'id','province_id');
+        return $this->hasOne(Address::class,'id','address_id');
     }
 
-    public function city()
-    {
-        return $this->hasOne(City::class,'id','city_id');
-    }
    
 }

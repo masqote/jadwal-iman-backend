@@ -13,7 +13,7 @@ class JadwalController extends Controller
     use ApiResponse;
     public function index(Request $req)
     {
-        $jadwal = Jadwal::with('ustadz')
+        $jadwal = Jadwal::with('ustadz','address')
         ->whereHas('ustadz', function($q){
             $q->active();
         });
@@ -23,7 +23,9 @@ class JadwalController extends Controller
         }
 
         if ($req->province) {
-            $jadwal->where('province_id',$req->province);
+            $jadwal->whereHas('address', function($q) use($req) {
+                $q->where('province_id', $req->province);
+            });
         }
 
         if ($req->ustadz) {
