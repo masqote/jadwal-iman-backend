@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\City;
+use App\Models\Waktu;
 use App\Models\Ustadz;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -40,6 +41,11 @@ class Jadwal extends Model
     public function address()
     {
         return $this->hasOne(Address::class,'id','address_id');
+    }
+
+    public function waktu()
+    {
+        return $this->hasOne(Waktu::class,'id','waktu_id');
     }
 
    

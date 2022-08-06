@@ -13,7 +13,7 @@ class JadwalController extends Controller
     use ApiResponse;
     public function index(Request $req)
     {
-        $jadwal = Jadwal::with('ustadz','address')
+        $jadwal = Jadwal::with('ustadz','address','waktu')
         ->whereHas('ustadz', function($q){
             $q->active();
         });
@@ -73,7 +73,7 @@ class JadwalController extends Controller
     public function slug(Request $req, $slug)
     {
         try {
-            $data = Jadwal::where('slug',$slug)->firstOrFail();
+            $data = Jadwal::with('waktu')->where('slug',$slug)->firstOrFail();
             return $this->success('','',$data);
         } catch (\Throwable $th) {
             return $this->fail('',$th->getMessage());
