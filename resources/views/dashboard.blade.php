@@ -1,1 +1,1 @@
-tes
+@extends('layouts.main')
