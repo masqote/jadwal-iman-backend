@@ -76,7 +76,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="tanggal">Url Kajian (optional)</label>
-                        <input type="text" name="url_kajian" class="form-control @error('url_kajian') is-invalid @enderror" placeholder="Tanggal Kajian"  value="{{$jadwal->url_kajian}}">
+                        <input type="text" name="url_kajian" class="form-control @error('url_kajian') is-invalid @enderror" placeholder="URL Kajian"  value="{{$jadwal->url_kajian}}">
                         @error('url_kajian')
                             <div class="invalid-feedback">
                                 {{$message}}
