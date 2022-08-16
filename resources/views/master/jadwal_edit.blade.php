@@ -14,8 +14,26 @@
                 </button>
             </div>
         @endif
-        <form role="form" action="{{url('/master/jadwal/update/'.$jadwal->id)}}" method="POST">
+        <form role="form" action="{{url('/master/jadwal/update/'.$jadwal->id)}}" method="POST" enctype="multipart/form-data">
             @csrf
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label for="title">Brosur Kajian ( Optional )</label>
+                        <input type="file" name="brosur" class="form-control @error('brosur') is-invalid @enderror" id="inputGroupFile01" >
+                        @error('brosur')
+                            <div class="invalid-feedback">
+                                {{$message}}
+                            </div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <img src="{{url('api')}}/{{$jadwal->brosur}}" style="width: 300px" height="400px" alt="">
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">

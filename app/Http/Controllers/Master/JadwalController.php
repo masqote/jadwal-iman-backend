@@ -25,6 +25,7 @@ class JadwalController extends Controller
             'url_kajian' => 'nullable',
             'address' => 'required_if:tipe_kajian,=,0',
             'waktu' => 'nullable',
+            'brosur' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 
@@ -83,6 +84,14 @@ class JadwalController extends Controller
             $data->waktu_id = $req->waktu;
             $data->deskripsi = $req->deskripsi ?? '';
             
+            if ($req->brosur) {
+                $imageName = time().'.'.$req->brosur->extension();
+                $req->brosur->move(public_path('/api/brosur'.'/'.$data->date_at), $imageName);
+
+                $data->brosur = 'brosur'.'/'.$data->date_at.'/'.$imageName;
+            }
+            
+            
             $data->save();
             return redirect()->route('jadwal')->with('Success', 'Berhasil tambah jadwal!');
 
@@ -121,6 +130,18 @@ class JadwalController extends Controller
             $data->url_kajian = $req->url_kajian;
             $data->waktu_id = $req->waktu;
             $data->deskripsi = $req->deskripsi ?? '';
+
+            if ($req->brosur) {
+                $path = public_path().'/api/';
+                $file_old = $path.$data->brosur;
+                unlink($file_old);
+                
+                $imageName = time().'.'.$req->brosur->extension();
+                
+                $req->brosur->move(public_path('/api/brosur'.'/'.$data->date_at), $imageName);
+
+                $data->brosur = 'brosur'.'/'.$data->date_at.'/'.$imageName;
+            }
             
             $data->save();
             return redirect()->route('jadwal')->with('Success', 'Berhasil update jadwal!');
@@ -134,6 +155,11 @@ class JadwalController extends Controller
     {
 
         $jadwal = Jadwal::findOrFail($req->id);
+
+        $path = public_path().'/api/';
+        $file_old = $path.$jadwal->brosur;
+        unlink($file_old);
+
         $jadwal->delete();
 
         return redirect()->route('jadwal')->with('Success', 'Berhasil delete jadwal!');

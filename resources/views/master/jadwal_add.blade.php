@@ -14,13 +14,25 @@
                     </button>
                 </div>
             @endif
-            <form role="form" action="{{url('/master/jadwal/store')}}" method="POST">
+            <form role="form" action="{{url('/master/jadwal/store')}}" method="POST" enctype="multipart/form-data">
                 @csrf
+                <div class="row">
+                    <div class="form-group mb-3">
+                        <label for="title">Brosur Kajian ( Optional )</label>
+                        <input type="file" name="brosur" class="form-control @error('brosur') is-invalid @enderror" id="inputGroupFile01">
+                        @error('brosur')
+                            <div class="invalid-feedback">
+                                {{$message}}
+                            </div>
+                        @enderror
+                    </div>
+                    
+                </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="title">Judul Kajian</label>
-                            <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" placeholder="Masukan Judul Kajian" value="{{old('title')}}"   autofocus>
+                            <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" placeholder="Masukan Judul Kajian" value="{{old('title')}}"  required  autofocus>
                             @error('title')
                                 <div class="invalid-feedback">
                                     {{$message}}
@@ -44,7 +56,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="ustadz">Ustadz</label>
-                            <select class="form-control @error('ustadz_id') is-invalid @enderror" name="ustadz_id" >
+                            <select class="form-control @error('ustadz_id') is-invalid @enderror" name="ustadz_id" required>
                                 <option value="">-- Pilih Ustadz --</option>
                                 @foreach($ustadz as $row)
                                     <option value="{{$row->id}}">{{$row->name}}</option>
