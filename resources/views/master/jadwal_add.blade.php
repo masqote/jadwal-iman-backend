@@ -148,7 +148,7 @@
 @endsection
 
 @section('js')
-<script src="//cdn.ckeditor.com/4.19.1/standard/ckeditor.js"></script>
+<script src="//cdn.ckeditor.com/4.19.1/full/ckeditor.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $('.ckeditor').ckeditor();

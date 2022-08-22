@@ -44,7 +44,7 @@ class JadwalController extends Controller
 
     public function jadwalUstadz(Request $req)
     {
-        $jadwal = Jadwal::with('ustadz')
+        $jadwal = Jadwal::with('ustadz')->where('date_at' ,'>=' , date('Y-m-d'))
         ->whereHas('ustadz', function($q){
             $q->active();
         });

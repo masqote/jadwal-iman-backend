@@ -121,7 +121,6 @@ class JadwalController extends Controller
             $date = explode("T",$req->date_at);
             $data = Jadwal::findOrFail($id);
             $data->title = $req->title;
-            $data->setSlugAttribute($req->title);
             $data->date_at = $date[0];
             $data->time_at = $date[1];
             $data->ustadz_id = $req->ustadz_id;
