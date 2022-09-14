@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DateController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Master\EventController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +46,7 @@ Route::get('/date-single', [DateController::class, 'index']);
 Route::get('/get-jadwal', [JadwalController::class, 'index']);
 Route::get('/get-jadwal-ustadz', [JadwalController::class, 'jadwalUstadz']);
 Route::get('/get-jadwal/{slug}', [JadwalController::class, 'slug']);
+Route::get('/get-event', 'App\Http\Controllers\EventController@index');
 
 
 // ============= Backend =====================

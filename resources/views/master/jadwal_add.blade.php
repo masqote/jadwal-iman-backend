@@ -14,6 +14,15 @@
                     </button>
                 </div>
             @endif
+            @if(session()->has('Error'))
+                <div class="alert alert-danger text-white alert-dismissible fade show" role="alert">
+                    <span class="alert-icon"></span>
+                    <span class="alert-text"><strong>Error!</strong> {{session('Error')}}</span>
+                    <button type="button" class="btn-close btn-lg" data-bs-dismiss="alert" aria-label="Close" style="padding: 14px;">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
             <form role="form" action="{{url('/master/jadwal/store')}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">

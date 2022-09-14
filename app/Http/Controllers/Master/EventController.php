@@ -114,9 +114,10 @@ class EventController extends Controller
     public function update(Request $req,$id)
     {
         $validator = $req->validate($this->rules);
+        $start_date = explode("T",$req->start_date);
+        $end_date = explode("T",$req->end_date);
 
         try {
-            $date = explode("T",$req->date_at);
             $data = Event::findOrFail($id);
             $data->title = $req->title;
             $data->start_date = $req->start_date;
