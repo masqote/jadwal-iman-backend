@@ -35,5 +35,17 @@ Route::group(['prefix' => 'master'], function () {
 
     Route::post('/jadwal/delete', 'App\Http\Controllers\Master\JadwalController@deleteData')->name('jadwal.delete')->middleware('auth');
 
+
+    Route::get('/event', 'App\Http\Controllers\Master\EventController@index')->name('event')->middleware('auth');
+    Route::get('/eventlist', 'App\Http\Controllers\Master\EventController@eventIndex')->name('event.index')->middleware('auth');
+
+    Route::get('/event/add', 'App\Http\Controllers\Master\EventController@add')->middleware('auth');
+    Route::post('/event/store', 'App\Http\Controllers\Master\EventController@store')->middleware('auth');
+
+    Route::get('/event/edit/{id}', 'App\Http\Controllers\Master\EventController@edit')->middleware('auth');
+    Route::post('/event/update/{id}', 'App\Http\Controllers\Master\EventController@update')->middleware('auth');
+
+    Route::post('/event/delete', 'App\Http\Controllers\Master\EventController@deleteData')->name('event.delete')->middleware('auth');
+
    
 });

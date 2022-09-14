@@ -44,11 +44,16 @@ class JadwalController extends Controller
 
     public function jadwalUstadz(Request $req)
     {
-        $jadwal = Jadwal::with('ustadz')->where('date_at' ,'>=' , date('Y-m-d'))
-        ->whereHas('ustadz', function($q){
+        $jadwal = Jadwal::with('ustadz')->whereHas('ustadz', function($q){
             $q->active();
         });
-       
+
+        if ($req->filter == 'old') {
+            $jadwal->where('date_at' ,'<' , date('Y-m-d'));
+        }else{
+            $jadwal->where('date_at' ,'>=' , date('Y-m-d'));
+        }
+        
         if ($req->id) {
            $jadwal->where('ustadz_id',$req->id);
         }
@@ -56,11 +61,17 @@ class JadwalController extends Controller
         if ($req->day) {
             $jadwal->where('date_at',$req->day);
         }
+        
 
         $jadwal->orderBy('date_at','asc')->orderBy('time_at','asc');
 
         try {
-            $data = $jadwal->get();
+            if ($req->filter == 'old') {
+                $data = $jadwal->take(25)->get();
+            }else{
+                $data = $jadwal->get();
+            }
+            
             if (count($data) > 0) {
                 return $this->success('','',$data);
             }

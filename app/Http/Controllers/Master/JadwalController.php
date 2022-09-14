@@ -133,7 +133,10 @@ class JadwalController extends Controller
             if ($req->brosur) {
                 $path = public_path().'/api/';
                 $file_old = $path.$data->brosur;
-                unlink($file_old);
+
+                if ($data->brosur) {
+                    unlink($file_old);
+                }
                 
                 $imageName = time().'.'.$req->brosur->extension();
                 
@@ -157,7 +160,10 @@ class JadwalController extends Controller
 
         $path = public_path().'/api/';
         $file_old = $path.$jadwal->brosur;
-        unlink($file_old);
+
+        if ($jadwal->brosur) {
+            unlink($file_old);
+        }
 
         $jadwal->delete();
 
