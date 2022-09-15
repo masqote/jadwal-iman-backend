@@ -63,7 +63,12 @@ class JadwalController extends Controller
         }
         
 
-        $jadwal->orderBy('date_at','asc')->orderBy('time_at','asc');
+        if ($req->filter == 'old') {
+            $jadwal->orderBy('date_at','desc')->orderBy('time_at','desc');
+        }else{
+            $jadwal->orderBy('date_at','asc')->orderBy('time_at','asc');
+        }
+        
 
         try {
             if ($req->filter == 'old') {
