@@ -47,6 +47,7 @@ Route::get('/get-jadwal', [JadwalController::class, 'index']);
 Route::get('/get-jadwal-ustadz', [JadwalController::class, 'jadwalUstadz']);
 Route::get('/get-jadwal/{slug}', [JadwalController::class, 'slug']);
 Route::get('/get-event', 'App\Http\Controllers\EventController@index');
+Route::get('/get-event-detail', 'App\Http\Controllers\EventController@show');
 
 
 // ============= Backend =====================

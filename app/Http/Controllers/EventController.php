@@ -12,6 +12,7 @@ use App\Http\Controllers\API\ApiResponse;
 class EventController extends Controller
 {
     use ApiResponse;
+
     public function index(Request $req)
     {
         $event = Event::with('address');
@@ -23,6 +24,20 @@ class EventController extends Controller
         $dataEvent = $event->get();
         
         return $this->success('','',$dataEvent);
+    }
+
+    public function show(Request $req)
+    {
+        $slug = $req->slug;
+
+        $event = Event::with('address')->where('slug',$slug)->firstOrFail();
+        
+        if ($event) {
+            return $this->success('','',$event);
+        }else{
+            return $this->fail('Data tidak ditemukan!','','');
+        }
+        
     }
 
 }
